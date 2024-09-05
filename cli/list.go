@@ -100,7 +100,7 @@ func listRecordsCommand(t *core.Timetrace) *cobra.Command {
 				totalDuration := defaultString
 				if record.End != nil {
 					end = t.Formatter().TimeString(*record.End)
-					totalDuration = t.Formatter().FormatDuration(*record.End.Sub(record.Start))
+					totalDuration = t.Formatter().FormatDuration(record.End.Sub(record.Start))
 				}
 				billable := defaultBool
 
