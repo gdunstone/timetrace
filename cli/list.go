@@ -108,7 +108,7 @@ func listRecordsCommand(t *core.Timetrace) *cobra.Command {
 					billable = "yes"
 				}
 
-				rows[i] = make([]string, 7)
+				rows[i] = make([]string, 8)
 				rows[i][0] = strconv.Itoa(len(records) - i)
 				rows[i][1] = t.Formatter().RecordKey(record)
 				rows[i][2] = record.Project.Key
@@ -119,7 +119,7 @@ func listRecordsCommand(t *core.Timetrace) *cobra.Command {
 				rows[i][7] = t.Formatter().FormatTags(record.Tags)
 			}
 
-			footer := make([]string, 7)
+			footer := make([]string, 8)
 			footer[len(footer)-2] = "Total: "
 			footer[len(footer)-1] = t.Formatter().FormatDuration(getTotalTrackedTime(records))
 
