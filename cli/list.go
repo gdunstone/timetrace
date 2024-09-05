@@ -97,10 +97,11 @@ func listRecordsCommand(t *core.Timetrace) *cobra.Command {
 
 			for i, record := range records {
 				end := defaultString
+				totalDuration := defaultString
 				if record.End != nil {
 					end = t.Formatter().TimeString(*record.End)
+					totalDuration = t.Formatter().FormatDuration(*record.End-record.Start)
 				}
-
 				billable := defaultBool
 
 				if record.IsBillable {
@@ -113,15 +114,16 @@ func listRecordsCommand(t *core.Timetrace) *cobra.Command {
 				rows[i][2] = record.Project.Key
 				rows[i][3] = t.Formatter().TimeString(record.Start)
 				rows[i][4] = end
-				rows[i][5] = billable
-				rows[i][6] = t.Formatter().FormatTags(record.Tags)
+				rows[i][5] = totalDuration
+				rows[i][6] = billable
+				rows[i][7] = t.Formatter().FormatTags(record.Tags)
 			}
 
 			footer := make([]string, 7)
 			footer[len(footer)-2] = "Total: "
 			footer[len(footer)-1] = t.Formatter().FormatDuration(getTotalTrackedTime(records))
 
-			out.Table([]string{"#", "Key", "Project", "Start", "End", "Billable", "Tags"}, rows, footer)
+			out.Table([]string{"#", "Key", "Project", "Start", "End", "Total", "Billable", "Tags"}, rows, footer)
 		},
 	}
 
